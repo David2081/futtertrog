@@ -58,4 +58,22 @@
             </label>
         </form>
     @endif
+
+    @if (config('services.authentik.enabled'))
+        <form method="GET" action="{{ route('login.authentik') }}">
+            <div class="or-login-with"><span>{{ __('or') }}</span></div>
+
+            <button type="submit" class="login-with-gitlab">
+                @svg('brands/gitlab', ['role="presentation"', 'aria-hidden="true"', 'focusable="false"'])
+                {{ __('Login with Authentik') }}
+            </button>
+
+            <input id="remember_gitlab" name="remember" type="checkbox"
+                    {{ old('remember') ? 'checked' : '' }}>
+            <label for="remember_gitlab">
+                {{ __('Remember Me') }}
+            </label>
+        </form>
+    @endif
+
 @endsection

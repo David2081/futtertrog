@@ -26,6 +26,7 @@
         "laravel/ui": "^4.0",
         "sentry/sentry-laravel": "^4.9",
         "silviolleite/laravelpwa": "^2.0",
+        "socialiteproviders/authentik": "^5.2",
         "socialiteproviders/gitlab": "^4.1"
     },
     "require-dev": {

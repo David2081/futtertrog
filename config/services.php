@@ -43,6 +43,14 @@ return [
         'redirect' => '/login/gitlab/callback',
     ],
 
+    'authentik' => [
+        'enabled' => env('LOGIN_WITH_AUTHENTIK', false),
+        'client_id' => env('GITLAB_CLIENT_ID'),
+        'client_secret' => env('GITLAB_CLIENT_SECRET'),
+        'base_url' => env('GITLAB_URL'),
+        'redirect' => '/login/authentik/callback',
+    ],
+
     'holzke' => [
         'enabled' =>  (bool) env('HOLZKE_ENABLED', false),
         'login' => env('HOLZKE_LOGIN'),

@@ -25,6 +25,11 @@ Route::group(['middleware' => 'enableLoginWithGitlab'], function () {
     Route::get('login/gitlab/callback', [LoginController::class, 'handleGitlabCallback'])->name('login.gitlab-callback');
 });
 
+Route::group(['middleware' => 'enableLoginWithAuthentik'], function () {
+    Route::get('login/authentik', [LoginController::class, 'redirectToAuthentik'])->name('login.authentik');
+    Route::get('login/authentik/callback', [LoginController::class, 'handleAuthentikCallback'])->name('login.authentik.callback');
+});
+
 Route::group(['middleware' => 'auth:web,api'], function () {
     Route::get('meals/ical', IcalController::class)->name('meals.ical');
 });

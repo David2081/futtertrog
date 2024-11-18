@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\GitlabProvider;
+use SocialiteProviders\Authentik\Provider;
+
+dump("in Login");
 
 /**
  * @OA\Post(
@@ -115,7 +118,7 @@ class LoginController extends Controller implements HasMiddleware
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Obtain the user information from GitLab.
      *
      * @param Request $request
      * @return JsonResponse|RedirectResponse
@@ -148,7 +151,7 @@ class LoginController extends Controller implements HasMiddleware
     }
 
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the GitLab authentication page.
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -162,6 +165,64 @@ class LoginController extends Controller implements HasMiddleware
 
         return $gitlabProvider->redirect();
     }
+
+    /**
+     * Obtain the user information from Authentik.
+     *
+     * @param Request $request
+     * @return JsonResponse|RedirectResponse
+     */
+    public function handleAuthentikCallback(Request $request, Session $session): JsonResponse|RedirectResponse
+    {
+        /** @var GitlabProvider $gitlabProvider */
+        $gitlabProvider = Socialite::driver('authentik');
+
+        dump($gitlabProvider); // user = null
+        dump($gitlabProvider->getBaseUrl());
+        //dump($gitlabProvider->getTokenFields("123"));
+        dump($gitlabProvider->getTokenFields("123"));
+
+        abort_if(true, Response::HTTP_UNAUTHORIZED);
+
+
+//         $gitlabUser = $gitlabProvider->user();
+
+//         /** @var User $user */
+//         $user = User::withTrashed()->firstOrNew(
+//             [
+//                 'email' => $gitlabUser->getEmail(),
+//             ],
+//             [
+//                 'name' => $gitlabUser->getName(),
+//                 'password' => Hash::make($gitlabUser->getId()),
+//             ]
+//         );
+
+//         abort_if($user->deleted_at !== null, Response::HTTP_UNAUTHORIZED);
+
+// //        $user->save();
+
+//         Auth::login($user, $session->pull('remember_gitlab'));
+
+//         return $this->sendLoginResponse($request);
+    }
+
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectToAuthentik(Request $request, Session $session): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $session->put('remember_gitlab', $request->filled('remember'));
+
+        /** @var GitlabProvider $gitlabProvider */
+        $gitlabProvider = Socialite::driver('authentik');
+
+        return $gitlabProvider->redirect();
+    }
+
 
     /**
      * Send the response after the user was authenticated.

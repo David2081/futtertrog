@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'cast.float' => \App\Http\Middleware\CastFormValuesToFloat::class,
             'enableLoginWithGitlab' => \App\Http\Middleware\EnableLoginWithGitlab::class,
+            'enableLoginWithAuthentik' => \App\Http\Middleware\EnableLoginWithAuthentik::class,
         ]);
 
         $middleware->append(\App\Http\Middleware\UserLocale::class);

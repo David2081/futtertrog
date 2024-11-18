@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cast.float' => \App\Http\Middleware\CastFormValuesToFloat::class,
         'enableLoginWithGitlab' => \App\Http\Middleware\EnableLoginWithGitlab::class,
+        'enableLoginWithAuthentik' => \App\Http\Middleware\EnableLoginWithAuthentik::class,
     ];
 
     /**

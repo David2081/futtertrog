@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+error_log("in ESP1");
+
+
 use App\Events\NewOrderPossibilities;
 use App\Events\NewOrderPossibility;
 use App\Events\OrderUpdated;
@@ -14,6 +17,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use SocialiteProviders\GitLab\GitLabExtendSocialite;
 use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\Authentik\AuthentikExtendSocialite;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -36,7 +40,8 @@ class EventServiceProvider extends ServiceProvider
             SendNewOrderPossibilitiesNotification::class,
         ],
         SocialiteWasCalled::class => [
-            GitLabExtendSocialite::class.'@handle',
+            AuthentikExtendSocialite::class.'@handle',
+//            GitLabExtendSocialite::class.'@handle',
         ],
     ];
 
